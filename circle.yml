@@ -1,0 +1,22 @@
+machine:
+  java:
+    version: "oraclejdk8"
+  node:
+    version: "7.2.0"
+  environment:
+    SBT_VERSION: "0.13.12"
+
+test:
+  override:
+    - "sbt coverage test coverageReport"
+  post:
+    - "cp -r target/scala-2.11/scoverage-report $CIRCLE_ARTIFACTS"
+    - "npm test"
+
+# deployment:
+#   docker:
+#     branch:
+#       - "master"
+#     commands:
+#       - "docker login -u \"$DOCKER_USERNAME\" -p \"$DOCKER_PASSWORD\" -e \"$DOCKER_EMAIL\""
+#       - "sbt docker:publish"
